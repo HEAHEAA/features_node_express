@@ -1,8 +1,8 @@
 # node_jwt
-#### blog https://kimjihee1113.tistory.com/29
+
 
 ### 01 로그인엑세스토큰 구현
-
+#### #01  https://kimjihee1113.tistory.com/29
 
 ```
 [ cmd ] 
@@ -52,7 +52,8 @@ exports.LoginPost = async(req, res) => {
 SECRET_KEY='mykeymykey'
 ```
 
-
+### 02 Token 인증 후 데이터 받기
+#### #02  https://kimjihee1113.tistory.com/30
 ```
 [ /controller/jwt.js ] 
 

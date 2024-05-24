@@ -8,7 +8,9 @@ const PORT = 3000;
 app.use(bodyParser.json());
 
 app.post('/login', jwtLogin.LoginPost);
+app.post('/refresh', jwtLogin.refreshJWT);
 app.get('/data', jwtLogin.authJWT, authData.JwtGetData );
+
 
 app.listen(PORT, () => {
     console.log(`server is running ${PORT}`);
