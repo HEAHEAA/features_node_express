@@ -40,6 +40,34 @@ app.post('/upload', upload.single('file'), (req, res) => {
     res.send('file upload and processed success');
 });
 
+
+app.get('/export', (req, res) => {
+     // 데이터 생성
+  const data = [{ name: '김지희', age: 25 }];
+
+  const workbook = xlsx.utils.book_new();
+  const worksheet = xlsx.utils.json_to_sheet(data);
+
+  //워크시트 추가
+  xlsx.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+  const filePath = path.join(__dirname, 'uploads', 'myxlsx.xlsx');
+//   xlsx.writeFile(workbook, filePath);
+
+
+
+    // 워크북을 버퍼에 작성
+    const buffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+
+    // 응답 헤더 설정
+    res.setHeader('Content-Disposition', 'attachment; filename="myxlsx.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+    // 버퍼 데이터를 클라이언트에 전송
+    res.send(buffer);
+
+})
+
 app.listen(port, () => {
     console.log(`Server is running port${port}`);
 })
