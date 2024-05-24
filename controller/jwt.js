@@ -15,3 +15,24 @@ exports.LoginPost = async(req, res) => {
     }
 }
 
+
+exports.authJWT = async(req, res, next) => {
+    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+
+    if(token){
+        jwt.verify(token, SECRET_KEY, (err, user) => {
+            if(err) {return res.sendStatus(403)}
+            req.user = user;
+            next();
+        });
+    }else{
+        res.status(401).json({
+            message: 'fail',
+            status: true,
+            data: [],
+            error: "접근 권한이 없습니다."
+        });
+    }
+};
+
+

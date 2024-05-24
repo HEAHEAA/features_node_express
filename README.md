@@ -53,3 +53,56 @@ SECRET_KEY='mykeymykey'
 ```
 
 
+```
+[ /controller/jwt.js ] 
+
+exports.authJWT = async(req, res, next) => {
+    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+
+    if(token){
+        jwt.verify(token, SECRET_KEY, (err, user) => {
+            if(err) {return res.sendStatus(403)}
+            req.user = user;
+            next();
+        });
+    }else{
+        res.status(401).json({
+            message: 'fail',
+            status: true,
+            data: [],
+            error: "접근 권한이 없습니다."
+        });
+    }
+};
+
+
+[ controller/authData.js ]
+exports.JwtGetData = async(req, res) => {
+    res.json({
+        message: 'success',
+        status: true,
+        data:[{id:1, name: '홍길동'}],
+        error: null
+    });
+};
+
+
+[ index.js ]
+const jwtLogin = require('./controller/jwt');
+const authData = require('./controller/authData');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const PORT = 3000;
+
+app.use(bodyParser.json());
+
+app.post('/login', jwtLogin.LoginPost);
+app.get('/data', jwtLogin.authJWT, authData.JwtGetData );
+
+app.listen(PORT, () => {
+    console.log(`server is running ${PORT}`);
+});
+```
+
+
