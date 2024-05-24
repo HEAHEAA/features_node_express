@@ -24,8 +24,6 @@ exports.LoginPost = async(req, res) => {
 }
 
 //토큰값 발급 refresh -> access
-
-//토큰 인증
 exports.refreshJWT = async(req, res) => {
     const {token} = req.body;
 

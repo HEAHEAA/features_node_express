@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 app.post('/login', jwtLogin.LoginPost);
 app.post('/refresh', jwtLogin.refreshJWT);
-app.get('/data', jwtLogin.authJWT, authData.JwtGetData );
+app.get('/data', jwtLogin.authJWT, authData.JwtGetData);
 
 
 app.listen(PORT, () => {
