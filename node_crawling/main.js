@@ -5,7 +5,7 @@ const postgres = require('./db/postgresdb');
 const nows = require('./util/date');
 
 
-gd
+
 const crawling = async () => {
     let driver = await new Builder().forBrowser('chrome').build();
 
